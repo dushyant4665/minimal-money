@@ -53,7 +53,7 @@ export function BudgetForm({ budgets, onSave, isLoading }: {
                 value={form[cat.value] || ''}
                 onChange={e => handleChange(cat.value, e.target.value)}
                 className="w-32"
-                placeholder="$0.00"
+                placeholder="₹0.00"
               />
             </div>
           ))}
