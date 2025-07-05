@@ -1,66 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
-const categories = [
-  { value: 'food', label: 'Food & Dining' },
-  { value: 'transportation', label: 'Transportation' },
-  { value: 'entertainment', label: 'Entertainment' },
-  { value: 'shopping', label: 'Shopping' },
-  { value: 'utilities', label: 'Utilities' },
-  { value: 'healthcare', label: 'Healthcare' },
-  { value: 'education', label: 'Education' },
-  { value: 'travel', label: 'Travel' },
-  { value: 'other', label: 'Other' },
-];
-
-export function BudgetForm({ budgets, onSave, isLoading }: {
-  budgets: { [key: string]: number };
-  onSave: (budgets: { [key: string]: number }) => void;
+interface BudgetVsActualChartProps {
+  data: { category: string; budget: number; actual: number }[];
   isLoading?: boolean;
-}) {
-  const [form, setForm] = useState<{ [key: string]: number }>(budgets || {});
-  const [saving, setSaving] = useState(false);
+}
 
-  const handleChange = (cat: string, value: string) => {
-    setForm(f => ({ ...f, [cat]: parseFloat(value) || 0 }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    await onSave(form);
-    setSaving(false);
-  };
-
+export function BudgetVsActualChart({ data, isLoading }: BudgetVsActualChartProps) {
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Budget vs Actual</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-64 bg-gray-100 rounded animate-pulse"></div>
+        </CardContent>
+      </Card>
+    );
+  }
+  if (!data || data.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Budget vs Actual</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-64 flex items-center justify-center">
+            <p className="text-muted-foreground">No budget data available</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Set Monthly Budgets</CardTitle>
+        <CardTitle>Budget vs Actual</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {categories.map(cat => (
-            <div key={cat.value} className="flex items-center gap-2">
-              <span className="w-40">{cat.label}</span>
-              <Input
-                type="number"
-                min="0"
-                step="0.01"
-                value={form[cat.value] || ''}
-                onChange={e => handleChange(cat.value, e.target.value)}
-                className="w-32"
-                placeholder="₹0.00"
-              />
-            </div>
-          ))}
-          <Button type="submit" disabled={saving || isLoading} className="w-full mt-4">
-            {saving || isLoading ? 'Saving...' : 'Save Budgets'}
-          </Button>
-        </form>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="category" tick={{ fontSize: 12 }} />
+            <YAxis tickFormatter={v => `₹${v}`} tick={{ fontSize: 12 }} />
+            <Tooltip formatter={(v: number) => `₹${v.toFixed(2)}`} />
+            <Legend />
+            <Bar dataKey="budget" fill="#3b82f6" name="Budget" />
+            <Bar dataKey="actual" fill="#ef4444" name="Actual" />
+          </BarChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
   );
