@@ -72,7 +72,7 @@ export function CategoryPieChart({ data, isLoading }: CategoryPieChartProps) {
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+            <Tooltip formatter={(value: number) => `₹${value.toFixed(2)}`} />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
