@@ -1,4 +1,4 @@
-# Personal Finance Visualizer
+# Minimal Money
 
 This is a simple app to track your money. You can add, edit, and delete your expenses and income. You can set budgets and see charts.
 
@@ -9,8 +9,7 @@ This is a simple app to track your money. You can add, edit, and delete your exp
 
 2. **Clone the Project**
    ```bash
-   git clone <your-repo-url>
-   cd nextapp
+   git clone https://github.com/dushyant4665/minimal-money
    ```
 
 3. **Install Packages**
@@ -48,11 +47,4 @@ This is a simple app to track your money. You can add, edit, and delete your exp
 - See charts for your spending
 - Simple, clean design
 
-## Need Help?
-- If you see errors, check your MongoDB connection string
-- Make sure you are in the `nextapp` folder when running commands
-- Ask for help if you get stuck
-
----
-
-**Made with Next.js, React, and MongoDB**
+DO THE HARD WORK SPECIALLY WHEN YOU DON'T FEEL LIKE TO DO IT
