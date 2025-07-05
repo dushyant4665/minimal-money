@@ -9,7 +9,7 @@ This is a simple app to track your money. You can add, edit, and delete your exp
 
 2. **Clone the Project**
    ```bash
-   git clone https://github.com/dushyant4665/minimal-money
+   git clone https://github.com/dushyant4665/minimal-money.git
    ```
 
 3. **Install Packages**
