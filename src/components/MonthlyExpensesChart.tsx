@@ -11,6 +11,13 @@ interface MonthlyExpensesChartProps {
   isLoading?: boolean;
 }
 
+// Define a type for the tooltip props
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: { value: number }[];
+  label?: string;
+}
+
 export function MonthlyExpensesChart({ data, isLoading }: MonthlyExpensesChartProps) {
   if (isLoading) {
     return (
@@ -45,7 +52,7 @@ export function MonthlyExpensesChart({ data, isLoading }: MonthlyExpensesChartPr
     expenses: item.total,
   }));
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-3 border rounded-lg shadow-lg">

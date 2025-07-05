@@ -13,11 +13,7 @@ export function formatCurrency(amount: number): string {
 }
 
 export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  return date.slice(0, 10); // Use a fixed format for SSR safety
 }
 
 export function getCurrentMonth(): string {
@@ -31,32 +27,31 @@ export function getMonthName(monthString: string): string {
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
-export function validateTransaction(data: any): { isValid: boolean; errors: string[] } {
+export function validateTransaction(data: unknown): { isValid: boolean; errors: string[] } {
   const errors: string[] = [];
-
-  if (!data.amount || isNaN(data.amount) || data.amount <= 0) {
+  if (typeof data !== 'object' || data === null) {
+    return { isValid: false, errors: ['Invalid data'] };
+  }
+  const d = data as Record<string, any>;
+  if (!d.amount || isNaN(d.amount) || d.amount <= 0) {
     errors.push('Amount must be a positive number');
   }
-
-  if (!data.date) {
+  if (!d.date) {
     errors.push('Date is required');
   } else {
-    const date = new Date(data.date);
+    const date = new Date(d.date);
     if (isNaN(date.getTime())) {
       errors.push('Invalid date format');
     }
   }
-
-  if (!data.description || data.description.trim().length === 0) {
+  if (!d.description || d.description.trim().length === 0) {
     errors.push('Description is required');
   }
-
-  if (!data.type || !['expense', 'income'].includes(data.type)) {
+  if (!d.type || !['expense', 'income'].includes(d.type)) {
     errors.push('Type must be either expense or income');
   }
-
   return {
     isValid: errors.length === 0,
     errors,
   };
-} 
+}
