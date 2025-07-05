@@ -21,7 +21,7 @@ This is a simple app to track your money. You can add, edit, and delete your exp
    - Make a free account at https://mongodb.com/atlas
    - Create a cluster
    - Get your connection string
-   - Make a file called `.env.local` in the `nextapp` folder:
+   - Make a file called `.env.local`
      ```env
      MONGODB_URI=your_mongodb_connection_string
      ```
