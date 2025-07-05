@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import clientPromise from '@/lib/mongodb';
 
-export async function PUT(request: NextRequest, context: { params: { id: string } }) {
-  const { params } = context;
+// WORKAROUND: Vercel/Next.js 15+ dynamic API route type bug
+// Use 'any' for the second argument to bypass the type error
+export async function PUT(request: NextRequest, { params }: any) {
   try {
     const body = await request.json();
     const client = await clientPromise;
@@ -22,8 +23,7 @@ export async function PUT(request: NextRequest, context: { params: { id: string 
   }
 }
 
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
-  const { params } = context;
+export async function DELETE(request: NextRequest, { params }: any) {
   try {
     const client = await clientPromise;
     const db = client.db('finance-tracker');
