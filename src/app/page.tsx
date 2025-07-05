@@ -6,13 +6,15 @@ import { TransactionForm } from "@/components/TransactionForm";
 import { TransactionList } from "@/components/TransactionList";
 import { MonthlyExpensesChart } from "@/components/MonthlyExpensesChart";
 import { CategoryPieChart } from "@/components/CategoryPieChart";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { BudgetForm } from '@/components/BudgetForm';
 import { BudgetVsActualChart } from '@/components/BudgetVsActualChart';
-import { Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
 
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [dashboard, setDashboard] = useState<Record<string, unknown> | null>(null);
+  const [dashboard, setDashboard] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
   const [editTx, setEditTx] = useState<Transaction | null>(null);
