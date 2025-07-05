@@ -78,7 +78,7 @@ export default function Home() {
     }
   };
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: Omit<Transaction, '_id' | 'createdAt'>) => {
     try {
       setFormLoading(true);
       let response;
