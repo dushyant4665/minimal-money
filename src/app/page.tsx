@@ -181,15 +181,15 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="card text-center">
               <div style={{fontSize:'0.9rem',color:'#555'}}>Total Expenses</div>
-              <div style={{fontWeight:'bold',fontSize:'1.1rem'}}>{typeof dashboard.totalExpenses === 'number' ? `$${dashboard.totalExpenses.toFixed(2)}` : '$0.00'}</div>
+              <div style={{fontWeight:'bold',fontSize:'1.1rem'}}>{typeof dashboard.totalExpenses === 'number' ? `₹${dashboard.totalExpenses.toFixed(2)}` : '₹0.00'}</div>
             </div>
             <div className="card text-center">
               <div style={{fontSize:'0.9rem',color:'#555'}}>Total Income</div>
-              <div style={{fontWeight:'bold',fontSize:'1.1rem'}}>{typeof dashboard.totalIncome === 'number' ? `$${dashboard.totalIncome.toFixed(2)}` : '$0.00'}</div>
+              <div style={{fontWeight:'bold',fontSize:'1.1rem'}}>{typeof dashboard.totalIncome === 'number' ? `₹${dashboard.totalIncome.toFixed(2)}` : '₹0.00'}</div>
             </div>
             <div className="card text-center">
               <div style={{fontSize:'0.9rem',color:'#555'}}>Net Amount</div>
-              <div style={{fontWeight:'bold',fontSize:'1.1rem'}}>{typeof dashboard.netAmount === 'number' ? `$${dashboard.netAmount.toFixed(2)}` : '$0.00'}</div>
+              <div style={{fontWeight:'bold',fontSize:'1.1rem'}}>{typeof dashboard.netAmount === 'number' ? `₹${dashboard.netAmount.toFixed(2)}` : '₹0.00'}</div>
             </div>
           </div>
         )}
