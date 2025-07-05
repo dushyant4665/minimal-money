@@ -79,7 +79,7 @@ export async function GET() {
     // Insights
     const insights = budgetVsActual
       .filter(item => item.actual > item.budget)
-      .map(item => `You are over budget in ${item.category} by $${(item.actual - item.budget).toFixed(2)}`);
+      .map(item => `You are over budget in ${item.category} by ₹${(item.actual - item.budget).toFixed(2)}`);
 
     return NextResponse.json({
       totalExpenses,
