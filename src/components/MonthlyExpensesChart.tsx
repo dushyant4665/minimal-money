@@ -11,7 +11,6 @@ interface MonthlyExpensesChartProps {
   isLoading?: boolean;
 }
 
-// Define a type for the tooltip props
 interface CustomTooltipProps {
   active?: boolean;
   payload?: { value: number }[];
@@ -83,7 +82,7 @@ export function MonthlyExpensesChart({ data, isLoading }: MonthlyExpensesChartPr
               height={80}
             />
             <YAxis 
-              tickFormatter={(value) => `$${value}`}
+              tickFormatter={(value) => `₹${value}`}
               tick={{ fontSize: 12 }}
             />
             <Tooltip content={<CustomTooltip />} />
