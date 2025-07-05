@@ -32,11 +32,15 @@ export function validateTransaction(data: unknown): { isValid: boolean; errors: 
   if (typeof data !== 'object' || data === null) {
     return { isValid: false, errors: ['Invalid data'] };
   }
-  const d = data as Record<string, any>;
-  if (!d.amount || isNaN(d.amount) || d.amount <= 0) {
+  const d = data as Record<string, unknown>;
+  if (
+    typeof d.amount !== 'number' ||
+    isNaN(d.amount) ||
+    d.amount <= 0
+  ) {
     errors.push('Amount must be a positive number');
   }
-  if (!d.date) {
+  if (typeof d.date !== 'string' || !d.date) {
     errors.push('Date is required');
   } else {
     const date = new Date(d.date);
@@ -44,14 +48,14 @@ export function validateTransaction(data: unknown): { isValid: boolean; errors: 
       errors.push('Invalid date format');
     }
   }
-  if (!d.description || d.description.trim().length === 0) {
+  if (typeof d.description !== 'string' || d.description.trim().length === 0) {
     errors.push('Description is required');
   }
-  if (!d.type || !['expense', 'income'].includes(d.type)) {
+  if (typeof d.type !== 'string' || !['expense', 'income'].includes(d.type)) {
     errors.push('Type must be either expense or income');
   }
   return {
     isValid: errors.length === 0,
     errors,
   };
-}
+} 

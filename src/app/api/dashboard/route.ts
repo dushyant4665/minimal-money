@@ -18,16 +18,16 @@ export async function GET() {
 
     // Calculate total expenses and income
     const totalExpenses = transactions
-      .filter((t: any) => t.type === 'expense')
-      .reduce((sum: number, t: any) => sum + t.amount, 0);
+      .filter((t: Record<string, unknown>) => t.type === 'expense')
+      .reduce((sum: number, t: Record<string, unknown>) => sum + (typeof t.amount === 'number' ? t.amount : 0), 0);
     const totalIncome = transactions
-      .filter((t: any) => t.type === 'income')
-      .reduce((sum: number, t: any) => sum + t.amount, 0);
+      .filter((t: Record<string, unknown>) => t.type === 'income')
+      .reduce((sum: number, t: Record<string, unknown>) => sum + (typeof t.amount === 'number' ? t.amount : 0), 0);
     const netAmount = totalIncome - totalExpenses;
 
     // Get recent transactions (last 5)
-    const recentTransactions = transactions
-      .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    const recentTransactions = [...transactions]
+      .sort((a: Record<string, unknown>, b: Record<string, unknown>) => new Date(String(b.date)).getTime() - new Date(String(a.date)).getTime())
       .slice(0, 5);
 
     // Calculate monthly expenses for the last 6 months
@@ -35,10 +35,10 @@ export async function GET() {
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     transactions
-      .filter((t: any) => t.type === 'expense' && new Date(t.date) >= sixMonthsAgo)
-      .forEach((t: any) => {
-        const month = t.date.substring(0, 7); // YYYY-MM format
-        monthlyExpenses[month] = (monthlyExpenses[month] || 0) + t.amount;
+      .filter((t: Record<string, unknown>) => t.type === 'expense' && new Date(String(t.date)) >= sixMonthsAgo)
+      .forEach((t: Record<string, unknown>) => {
+        const month = String(t.date).substring(0, 7); // YYYY-MM format
+        monthlyExpenses[month] = (monthlyExpenses[month] || 0) + (typeof t.amount === 'number' ? t.amount : 0);
       });
     const monthlyExpensesArray = Object.entries(monthlyExpenses)
       .map(([month, total]) => ({ month, total: total as number }))
@@ -47,9 +47,9 @@ export async function GET() {
     // Calculate category expenses (all time)
     const categoryExpenses: { [key: string]: number } = {};
     transactions
-      .filter((t: any) => t.type === 'expense' && t.category)
-      .forEach((t: any) => {
-        categoryExpenses[t.category!] = (categoryExpenses[t.category!] || 0) + t.amount;
+      .filter((t: Record<string, unknown>) => t.type === 'expense' && t.category)
+      .forEach((t: Record<string, unknown>) => {
+        categoryExpenses[String(t.category)] = (categoryExpenses[String(t.category)] || 0) + (typeof t.amount === 'number' ? t.amount : 0);
       });
     const categoryExpensesArray = Object.entries(categoryExpenses)
       .map(([category, total]) => ({
@@ -62,13 +62,13 @@ export async function GET() {
     // --- Budgeting ---
     const currentMonth = getCurrentMonth();
     const budgets = await budgetCol.find({ month: currentMonth }).toArray();
-    const budgetMap: { [key: string]: number } = Object.fromEntries(budgets.map((b: any) => [b.category, b.amount]));
+    const budgetMap: { [key: string]: number } = Object.fromEntries(budgets.map((b: Record<string, unknown>) => [b.category, b.amount]));
     // Calculate actual spent per category for current month
     const actuals: { [key: string]: number } = {};
     transactions
-      .filter((t: any) => t.type === 'expense' && t.category && t.date.startsWith(currentMonth))
-      .forEach((t: any) => {
-        actuals[t.category!] = (actuals[t.category!] || 0) + t.amount;
+      .filter((t: Record<string, unknown>) => t.type === 'expense' && t.category && String(t.date).startsWith(currentMonth))
+      .forEach((t: Record<string, unknown>) => {
+        actuals[String(t.category)] = (actuals[String(t.category)] || 0) + (typeof t.amount === 'number' ? t.amount : 0);
       });
     // Budget vs actual array
     const budgetVsActual = Object.keys(budgetMap).map(category => ({

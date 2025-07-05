@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const query = month ? { month } : {};
     const budgets = await collection.find(query).toArray();
     return NextResponse.json(budgets);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch budgets' }, { status: 500 });
   }
 }
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const collection = db.collection('budgets');
     const result = await collection.insertOne({ ...body, createdAt: new Date(), updatedAt: new Date() });
     return NextResponse.json({ ...body, _id: result.insertedId }, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create budget' }, { status: 500 });
   }
 } 

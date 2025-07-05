@@ -61,7 +61,7 @@ export function TransactionForm({ transaction, onSubmit, onCancel, isLoading }: 
     if (!transaction && !formData.date) {
       setFormData(prev => ({ ...prev, date: getToday() }));
     }
-  }, [transaction]);
+  }, [transaction, formData.date]);
 
   const validateForm = () => {
     const newErrors: string[] = [];

@@ -16,7 +16,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Budget not found' }, { status: 404 });
     }
     return NextResponse.json({ message: 'Budget updated successfully' });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update budget' }, { status: 500 });
   }
 }
@@ -31,7 +31,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: 'Budget not found' }, { status: 404 });
     }
     return NextResponse.json({ message: 'Budget deleted successfully' });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete budget' }, { status: 500 });
   }
 } 

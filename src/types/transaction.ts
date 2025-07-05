@@ -43,4 +43,7 @@ export interface DashboardStats {
   recentTransactions: Transaction[];
   monthlyExpenses: MonthlyExpense[];
   categoryExpenses: CategoryExpense[];
+  budgets: Budget[];
+  budgetVsActual: { category: string; budget: number; actual: number }[];
+  insights: string[];
 } 

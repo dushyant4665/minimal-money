@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Transaction } from "@/types/transaction";
+import { Transaction, DashboardStats } from "@/types/transaction";
 import { TransactionForm } from "@/components/TransactionForm";
 import { TransactionList } from "@/components/TransactionList";
 import { MonthlyExpensesChart } from "@/components/MonthlyExpensesChart";
@@ -14,7 +14,7 @@ import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
 
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [dashboard, setDashboard] = useState<any>(null);
+  const [dashboard, setDashboard] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
   const [editTx, setEditTx] = useState<Transaction | null>(null);

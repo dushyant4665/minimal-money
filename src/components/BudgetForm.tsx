@@ -17,14 +17,6 @@ const categories = [
   { value: 'other', label: 'Other' },
 ];
 
-function getCurrentMonth() {
-  if (typeof window !== 'undefined') {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  }
-  return '';
-}
-
 export function BudgetForm({ budgets, onSave, isLoading }: {
   budgets: { [key: string]: number };
   onSave: (budgets: { [key: string]: number }) => void;
